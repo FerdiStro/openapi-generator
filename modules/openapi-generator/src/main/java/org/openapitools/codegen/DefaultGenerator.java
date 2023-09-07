@@ -541,6 +541,54 @@ public class DefaultGenerator implements Generator {
         // post process all processed models
         allProcessedModels = config.postProcessAllModels(allProcessedModels);
 
+        //
+
+
+        HashMap<String, String> nameMap  = new HashMap<>();
+
+
+        for (String modelName : allProcessedModels.keySet()) {
+            if(allProcessedModels.get(modelName).get("withXml").toString().equals("true")){
+                CodegenModel model = (CodegenModel) allProcessedModels.get(modelName).getModels().get(0).get("model");
+//                model.getDataType().equals("Array");
+                Map<String, Object> models =  new ModelsMap();
+
+//                allProcessedModels.get(modelName).setModels());
+
+                if(!model.getName().equals(model.getXmlName())){
+                    nameMap.put(model.getClassFilename(), model.getXmlName());
+                }
+                List<CodegenProperty> codegenProperties =  new ArrayList<>();
+                for(CodegenProperty property : model.getVars()){
+
+                    if(nameMap.containsKey(property.getComplexType())){
+                        property.setXmlArrayName(nameMap.get(property.getComplexType()));
+                    }
+
+                    //Set Property to Models and build Project
+                    codegenProperties.add(property);
+
+
+                }
+                model.setVars(codegenProperties);
+
+                ModelMap modelMap = allProcessedModels.get(modelName).getModels().get(0);
+                modelMap.put("model", model);
+
+                List<ModelMap> modelList =  new ArrayList<>();
+                modelList.add(modelMap);
+
+                ModelsMap modelsMap =  allProcessedModels.get(modelName);
+                modelsMap.put("models", modelList );
+
+
+
+                allProcessedModels.put(modelName, modelsMap);
+            }
+        }
+
+        //
+
         // generate files based on processed models
         for (String modelName : allProcessedModels.keySet()) {
             ModelsMap models = allProcessedModels.get(modelName);
