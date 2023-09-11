@@ -56,27 +56,9 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
   {{#isContainer}}
   {{#useBeanValidation}}@Valid{{/useBeanValidation}}
   {{#openApiNullable}}
-  //T1
-  {{#withXml}}
-  @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}}, localName = "{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
-  @JacksonXmlProperty(localName = "{{xmlArrayName}}")
-  //Basename: {{baseName}}
-  //Prefix:  {{xmlPrefix}}
-  //xmlName: {{xmlname}}
-  //xmlNamespace: {{xmlNamespace}}
-  //localName = "{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}"
-  //name:  {{name}}
-  //nullableDataType: {{>nullableDataType}}
-  //xmlArrayNam: {{xmlArrayName}}
-  {{referencedSchemaXml}}
-  {{/withXml}}
   private {{>nullableDataType}} {{name}}{{#isNullable}} = JsonNullable.undefined(){{/isNullable}}{{^isNullable}}{{#defaultValue}} = {{{.}}}{{/defaultValue}}{{/isNullable}};
   {{/openApiNullable}}
   {{^openApiNullable}}
-  {{#withXml}}
-  @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}})
-  {{/withXml}}
-      //T2
   private {{>nullableDataType}} {{name}}{{#defaultValue}} = {{{.}}}{{/defaultValue}};
   {{/openApiNullable}}
   {{/isContainer}}
@@ -88,17 +70,9 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   {{/isDateTime}}
   {{#openApiNullable}}
-      //T3
-  {{#withXml}}
-  @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}})
-  {{/withXml}}
   private {{>nullableDataType}} {{name}}{{#isNullable}} = JsonNullable.undefined(){{/isNullable}}{{^isNullable}}{{#defaultValue}} = {{{.}}}{{/defaultValue}}{{/isNullable}};
   {{/openApiNullable}}
   {{^openApiNullable}}
-      //T4
-  {{#withXml}}
-  @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}})
-  {{/withXml}}
   private {{>nullableDataType}} {{name}}{{#isNullable}} = null{{/isNullable}}{{^isNullable}}{{#defaultValue}} = {{{.}}}{{/defaultValue}}{{/isNullable}};
   {{/openApiNullable}}
   {{/isContainer}}
@@ -212,6 +186,12 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
   {{#jackson}}
   @JsonProperty("{{baseName}}")
   {{/jackson}}
+
+  //Getter WRAPPED
+  {{#withXml}}
+  @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}}, localName = "{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
+  @JacksonXmlProperty(localName = "{{xmlArrayName}}")
+  {{/withXml}}
   public {{>nullableDataType}} {{getter}}() {
     return {{name}};
   }
