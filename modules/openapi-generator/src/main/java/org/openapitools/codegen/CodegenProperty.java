@@ -196,8 +196,6 @@ public class CodegenProperty implements Cloneable, IJsonSchemaValidationProperti
     public String xmlName;
     public String xmlNamespace;
     public boolean isXmlWrapped = false;
-    //String for XMl Arrays when item is named other than the Array
-    public String xmlArrayName;
     //Xml String
 
 
@@ -745,14 +743,6 @@ public class CodegenProperty implements Cloneable, IJsonSchemaValidationProperti
     public void setXmlNamespace(String xmlNamespace) {
         this.xmlNamespace = xmlNamespace;
     }
-
-    public void setXmlArrayName(String xmlArrayName){
-        this.xmlArrayName =  xmlArrayName;
-    }
-    public String getXmlArrayName(){
-        return this.xmlArrayName;
-    }
-
 
     @Override
     public void setComposedSchemas(CodegenComposedSchemas composedSchemas) {
