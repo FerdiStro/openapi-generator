@@ -186,11 +186,9 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
   {{#jackson}}
   @JsonProperty("{{baseName}}")
   {{/jackson}}
-
-  //Getter WRAPPED
   {{#withXml}}
   @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}}, localName = "{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
-  @JacksonXmlProperty(localName = "{{xmlArrayName}}")
+  @JacksonXmlProperty(localName = "{{xmlArrayName}}{{^xmlArrayName}}{{items.datatypeWithEnum}}{{/xmlArrayName}}")
   {{/withXml}}
   public {{>nullableDataType}} {{getter}}() {
     return {{name}};
