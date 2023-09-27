@@ -188,7 +188,7 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
   {{/jackson}}
   {{#withXml}}
   @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}}, localName = "{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
-  @JacksonXmlProperty(localName = "{{xmlArrayName}}{{^xmlArrayName}}{{items.datatypeWithEnum}}{{/xmlArrayName}}")
+  @JacksonXmlProperty({{#isXmlAttribute}}isAttribute = true, {{/isXmlAttribute}}  localName = "{{xmlArrayName}}{{^xmlArrayName}}{{items.datatypeWithEnum}}{{/xmlArrayName}}")
   {{/withXml}}
   public {{>nullableDataType}} {{getter}}() {
     return {{name}};
