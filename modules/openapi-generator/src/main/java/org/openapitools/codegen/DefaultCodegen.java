@@ -80,6 +80,7 @@ import static org.openapitools.codegen.CodegenConstants.UNSUPPORTED_V310_SPEC_MS
 import static org.openapitools.codegen.utils.OnceLogger.once;
 import static org.openapitools.codegen.utils.StringUtils.*;
 
+
 public class DefaultCodegen implements CodegenConfig {
     private final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
 
@@ -3876,6 +3877,9 @@ public class DefaultCodegen implements CodegenConfig {
      *                                         the value should be false
      * @return Codegen Property object
      */
+
+    ///
+
     public CodegenProperty fromProperty(String name, Schema p, boolean required, boolean schemaIsFromAdditionalProperties) {
         if (p == null) {
             LOGGER.error("Undefined property/schema for `{}`. Default to type:string.", name);
@@ -4015,7 +4019,14 @@ public class DefaultCodegen implements CodegenConfig {
 
         final XML referencedSchemaXml = referencedSchema.getXml();
 
+        if(p.getItems() != null){
+            LOGGER.warn("REF: " +  p.getItems().get$ref().toString());
+        }
+
         if (referencedSchemaXml != null) {
+
+            LOGGER.warn(referencedSchemaXml.toString());
+
             property.xmlName = referencedSchemaXml.getName();
             property.xmlNamespace = referencedSchemaXml.getNamespace();
             property.xmlPrefix = referencedSchemaXml.getPrefix();
@@ -4026,6 +4037,18 @@ public class DefaultCodegen implements CodegenConfig {
                 property.isXmlWrapped = referencedSchemaXml.getWrapped();
             }
         }
+
+
+//        Set<Entry<String, Object>> entries = referencedSchemaXml.getExtensions().entrySet();
+//        for(Entry<String, Object> s  : entries){
+//            LOGGER.error(s.getKey());
+//        }
+
+
+
+//        {{#withXml}}
+//        @JacksonXmlProperty({{#isXmlAttribute}}isAttribute = true, {{/isXmlAttribute}}{{#xmlNamespace}}namespace="{{.}}", {{/xmlNamespace}}localName = "{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
+//        {{/withXml}}
 
         if (p.getXml() != null) {
             if (p.getXml().getAttribute() != null) {
@@ -4038,6 +4061,9 @@ public class DefaultCodegen implements CodegenConfig {
             property.xmlName = p.getXml().getName();
             property.xmlNamespace = p.getXml().getNamespace();
         }
+
+
+
 
         property.dataType = getTypeDeclaration(p);
         property.dataFormat = p.getFormat();
@@ -5852,6 +5878,8 @@ public class DefaultCodegen implements CodegenConfig {
                 }
             }
         }
+
+
 
         for (Map.Entry<String, Schema> entry : properties.entrySet()) {
             final String key = entry.getKey();

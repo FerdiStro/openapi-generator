@@ -45,9 +45,7 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
     {{/isContainer}}
     {{/isEnum}}
   {{#jackson}}
-  {{#withXml}}
-  @JacksonXmlProperty({{#isXmlAttribute}}isAttribute = true, {{/isXmlAttribute}}{{#xmlNamespace}}namespace="{{.}}", {{/xmlNamespace}}localName = "{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
-  {{/withXml}}
+
   {{/jackson}}
   {{#gson}}
   @SerializedName("{{baseName}}")
@@ -128,6 +126,12 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
     this.{{name}}{{#isNullable}}.get(){{/isNullable}}.add({{name}}Item);
     {{/openApiNullable}}
     {{^openApiNullable}}
+
+    {{#withXml}}
+    @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}})
+    {{/withXml}}
+    //T1
+
     if (this.{{name}} == null) {
       this.{{name}} = {{{defaultValue}}}{{^defaultValue}}new {{#uniqueItems}}LinkedHashSet{{/uniqueItems}}{{^uniqueItems}}ArrayList{{/uniqueItems}}<>(){{/defaultValue}};
     }
@@ -182,6 +186,10 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
   {{#jackson}}
   @JsonProperty("{{baseName}}")
   {{/jackson}}
+  {{#withXml}}
+  @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}}, localName = "{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
+  @JacksonXmlProperty(localName = "{{xmlArrayName}}{{^xmlArrayName}}{{items.datatypeWithEnum}}{{/xmlArrayName}}")
+  {{/withXml}}
   public {{>nullableDataType}} {{getter}}() {
     return {{name}};
   }
