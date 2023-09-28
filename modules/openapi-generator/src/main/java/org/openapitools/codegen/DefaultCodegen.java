@@ -4019,8 +4019,8 @@ public class DefaultCodegen implements CodegenConfig {
 
         final XML referencedSchemaXml = referencedSchema.getXml();
 
-        if(p.getItems() != null){
-            LOGGER.warn("REF: " +  p.getItems().get$ref().toString());
+        if(p.getItems() != null && p.getItems().get$ref() != null){
+            LOGGER.warn("REF: " + p.getItems().get$ref());
         }
 
         if (referencedSchemaXml != null) {
