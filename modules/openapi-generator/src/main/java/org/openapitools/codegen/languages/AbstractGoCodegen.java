@@ -46,6 +46,7 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
     protected boolean withGoCodegenComment = false;
     protected boolean withAWSV4Signature = false;
     protected boolean withXml = false;
+    protected boolean ignoreXmlNull = false;
     protected boolean enumClassPrefix = false;
     protected boolean structPrefix = false;
     protected boolean generateInterfaces = false;
@@ -790,6 +791,10 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
 
     public void setWithXml(boolean withXml) {
         this.withXml = withXml;
+    }
+
+    public void setIgnoreXmlNull(boolean ignoreXmlNull){
+        this.ignoreXmlNull =  ignoreXmlNull;
     }
 
     public void setEnumClassPrefix(boolean enumClassPrefix) {

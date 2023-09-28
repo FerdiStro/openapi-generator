@@ -52,6 +52,7 @@ public class GoClientCodegen extends AbstractGoCodegen {
     protected String modelDocPath = "docs/";
     protected String modelFileFolder = null;
     public static final String WITH_XML = "withXml";
+    public static final String IGNORE_XML_NULL = "ignoreXmlNull";
     public static final String STRUCT_PREFIX = "structPrefix";
     public static final String WITH_AWSV4_SIGNATURE = "withAWSV4Signature";
     public static final String GENERATE_INTERFACES = "generateInterfaces";
@@ -211,6 +212,11 @@ public class GoClientCodegen extends AbstractGoCodegen {
         if (additionalProperties.containsKey(WITH_XML)) {
             setWithXml(Boolean.parseBoolean(additionalProperties.get(WITH_XML).toString()));
             additionalProperties.put(WITH_XML, withXml);
+        }
+
+        if (additionalProperties.containsKey(IGNORE_XML_NULL)) {
+            setIgnoreXmlNull(Boolean.parseBoolean(additionalProperties.get(IGNORE_XML_NULL).toString()));
+            additionalProperties.put(IGNORE_XML_NULL, ignoreXmlNull);
         }
 
         if (additionalProperties.containsKey(CodegenConstants.ENUM_CLASS_PREFIX)) {
