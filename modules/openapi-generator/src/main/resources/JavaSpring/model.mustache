@@ -31,16 +31,17 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 {{#swagger2AnnotationLibrary}}
 import io.swagger.v3.oas.annotations.media.Schema;
 {{/swagger2AnnotationLibrary}}
-
 {{#withXml}}
 import {{javaxPackage}}.xml.bind.annotation.*;
 {{/withXml}}
+{{#ignoreXmlNull}}
+import com.fasterxml.jackson.annotation.JsonInclude;
+{{/ignoreXmlNull}}
 {{^parent}}
 {{#hateoas}}
 import org.springframework.hateoas.RepresentationModel;
 {{/hateoas}}
 {{/parent}}
-
 import java.util.*;
 import {{javaxPackage}}.annotation.Generated;
 
@@ -60,3 +61,4 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 {{/isEnum}}
 {{/model}}
 {{/models}}
+
