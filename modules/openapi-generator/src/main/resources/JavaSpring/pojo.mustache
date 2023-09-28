@@ -127,10 +127,6 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
     {{/openApiNullable}}
     {{^openApiNullable}}
 
-    {{#withXml}}
-    @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}})
-    {{/withXml}}
-    //T1
 
     if (this.{{name}} == null) {
       this.{{name}} = {{{defaultValue}}}{{^defaultValue}}new {{#uniqueItems}}LinkedHashSet{{/uniqueItems}}{{^uniqueItems}}ArrayList{{/uniqueItems}}<>(){{/defaultValue}};
@@ -188,7 +184,7 @@ public class {{classname}}{{#parent}} extends {{{parent}}}{{/parent}}{{^parent}}
   {{/jackson}}
   {{#withXml}}
   @JacksonXmlElementWrapper(useWrapping = {{isXmlWrapped}}, localName = "{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
-  @JacksonXmlProperty(localName = "{{xmlArrayName}}{{^xmlArrayName}}{{items.datatypeWithEnum}}{{/xmlArrayName}}")
+  @JacksonXmlProperty({{#isXmlAttribute}}isAttribute = true, {{/isXmlAttribute}}{{#xmlNamespace}}namespace="{{.}}", {{/xmlNamespace}}localName = "{{mostInnerItems.xmlName}}{{^mostInnerItems.xmlName}}{{mostInnerItems.baseName}}{{/mostInnerItems.xmlName}}")
   {{/withXml}}
   public {{>nullableDataType}} {{getter}}() {
     return {{name}};
